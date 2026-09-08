@@ -1,0 +1,38 @@
+package com.sift.screener.ai;
+
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.stereotype.Service;
+
+@Service
+public class RecruiterChatService {
+
+    private static final String SYSTEM_PROMPT = """
+            You are a helpful recruiting assistant answering a recruiter's questions
+            about a pool of already-screened candidates for a specific role. Be concise,
+            concrete, and reference candidates by name where relevant. If the question
+            can't be answered from the information given, say so plainly.
+            """;
+
+    private final ChatClient chatClient;
+
+    public RecruiterChatService(ChatClient.Builder chatClientBuilder) {
+        this.chatClient = chatClientBuilder.defaultSystem(SYSTEM_PROMPT).build();
+    }
+
+    public String ask(String jobDescription, String candidateContext, String question) {
+        String prompt = """
+                Job description:
+                %s
+
+                Candidates on file:
+                %s
+
+                Recruiter question: %s
+                """.formatted(jobDescription, candidateContext, question);
+
+        return chatClient.prompt()
+                .user(prompt)
+                .call()
+                .content();
+    }
+}

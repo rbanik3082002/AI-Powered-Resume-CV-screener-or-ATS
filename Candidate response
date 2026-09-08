@@ -1,0 +1,22 @@
+package com.sift.screener.candidate.dto;
+
+import com.sift.screener.candidate.Candidate;
+import com.sift.screener.candidate.CandidateStatus;
+
+import java.util.List;
+
+public record CandidateResponse(
+        Long id,
+        String name,
+        CandidateStatus status,
+        Integer score,
+        String summary,
+        List<String> strengths,
+        List<String> gaps
+) {
+    public static CandidateResponse from(Candidate c) {
+        return new CandidateResponse(
+                c.getId(), c.getName(), c.getStatus(), c.getScore(),
+                c.getSummary(), c.getStrengths(), c.getGaps());
+    }
+}

@@ -1,0 +1,66 @@
+Code for this purpose -
+
+package com.sift.screener.ai;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.stereotype.Service;
+
+/**
+ * Wraps the chat model to produce a calibrated score + rationale for a
+ * candidate against a job description. Swap the underlying model (Anthropic,
+ * OpenAI, etc.) purely via Spring AI configuration — this class doesn't care.
+ */
+@Service
+public class ScoringService {
+
+    private static final String SYSTEM_PROMPT = """
+            You are an experienced, calibrated technical recruiter. You evaluate resumes
+            against job descriptions fairly and specifically, avoiding both leniency and
+            harshness. Respond with ONLY a JSON object, no markdown fences, no preamble,
+            no trailing commentary. The JSON must have exactly this shape:
+            {"score": <integer 0-100>, "summary": "<two sentence summary>",
+             "strengths": ["...", "..."], "gaps": ["...", "..."]}
+            """;
+
+    private final ChatClient chatClient;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    public ScoringService(ChatClient.Builder chatClientBuilder) {
+        this.chatClient = chatClientBuilder.defaultSystem(SYSTEM_PROMPT).build();
+    }
+
+    public ScoreResult score(String jobDescription, String resumeText) {
+        String prompt = """
+                Job description:
+                \"\"\"%s\"\"\"
+
+                Candidate resume:
+                \"\"\"%s\"\"\"
+
+                Evaluate this candidate against the job description.
+                """.formatted(jobDescription, resumeText);
+
+        String raw = chatClient.prompt()
+                .user(prompt)
+                .call()
+                .content();
+
+        return parse(raw);
+    }
+
+    private ScoreResult parse(String raw) {
+        String cleaned = raw.replace("```json", "").replace("```", "").trim();
+        int start = cleaned.indexOf('{');
+        int end = cleaned.lastIndexOf('}');
+        if (start == -1 || end == -1) {
+            throw new IllegalStateException("Model did not return parseable JSON: " + raw);
+        }
+        String json = cleaned.substring(start, end + 1);
+        try {
+            return objectMapper.readValue(json, ScoreResult.class);
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to parse scoring response: " + json, e);
+        }
+    }
+}

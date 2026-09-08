@@ -1,0 +1,8 @@
+package com.sift.screener.ai;
+ 
+import java.util.List;
+ 
+public record ScoreResult(int score, String summary, List<String> strengths, List<String> gaps) {}
+
+
+

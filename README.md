@@ -4,7 +4,7 @@ AI Powered Applicant Screening Platform
 
 Purpose
 
-It's an AI-assisted hiring tool ("Sift") that helps a recruiter go from "here's a job and a pile of resumes" to "here's who to interview and when" — automating the tedious parts (reading every resume, scoring against the JD, answering questions about the pool) while keeping a human recruiter in the loop for the actual decisions.
+It's an AI-assisted hiring tool that helps a recruiter go from "here's a job and a pile of resumes" to "here's who to interview and when" — automating the tedious parts (reading every resume, scoring against the JD, answering questions about the pool) while keeping a human recruiter in the loop for the actual decisions.
 
 End-to-end flow it supports
 

@@ -1,4 +1,18 @@
-# AI-Powered-Resume-CV-screener-or-ATS
+Purpose
+
+It's an AI-assisted hiring tool ("Sift") that helps a recruiter go from "here's a job and a pile of resumes" to "here's who to interview and when" — automating the tedious parts (reading every resume, scoring against the JD, answering questions about the pool) while keeping a human recruiter in the loop for the actual decisions.
+
+End-to-end flow it supports
+
+A recruiter logs in and posts a job description.
+They upload candidate resumes (PDF/DOCX/TXT).
+The AI parses each resume and scores it against that job description, with a rationale (strengths/gaps).
+Candidates get ranked; the recruiter sets a threshold to form a shortlist.
+The recruiter can ask free-form questions across the whole candidate pool ("who has the strongest cloud experience?").
+Shortlisted candidates get interview slots scheduled.
+
+
+
 Built an AI powered CV screener of candidates to test and check their eligibility for technical interviews or moving forward to the next rounds of the selection process for the job. Tech Stack used-Java Spring Boot + Spring AI orchestrated Full stack single page ReactJS webpage 
 
 

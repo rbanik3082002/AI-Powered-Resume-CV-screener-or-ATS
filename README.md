@@ -17,7 +17,7 @@ Shortlisted candidates get interview slots scheduled.
 
 
 
-Built an AI powered CV screener of candidates to test and check their eligibility for technical interviews or moving forward to the next rounds of the selection process for the job. Tech Stack used-Java Spring Boot + Spring AI orchestrated Full stack single page ReactJS webpage 
+Built an AI powered CV screener of candidates to test and check their eligibility for technical interviews or moving forward to the next rounds of the selection process for the job. Tech Stack used-React js and CSS --> Java Spring Boot + Spring AI orchestrated Full stack single page ReactJS webpage 
 
 
 The two halves of the stack

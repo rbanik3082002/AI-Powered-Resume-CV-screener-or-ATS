@@ -16,6 +16,13 @@ Shortlisted candidates get interview slots scheduled.
 Built an AI powered CV screener of candidates to test and check their eligibility for technical interviews or moving forward to the next rounds of the selection process for the job. Tech Stack used-Java Spring Boot + Spring AI orchestrated Full stack single page ReactJS webpage 
 
 
+The two halves of the stack
+
+Layer	What it's for
+React + TypeScript frontend (the artifact I built first)	The recruiter's actual UI — upload resumes, view scores/rankings, chat with the AI, book interviews. Right now it's a self-contained in-browser demo calling the AI directly, so you can see the concept working immediately.
+Java 21 / Spring Boot backend (what we've been building since)	The real system of record: auth, persistence, parsing, and AI orchestration that a production version needs — things a browser-only demo can't safely or durably do.
+
+
 Frontend or UI/UX- React.js, HTML, Tailwind CSS
 
 

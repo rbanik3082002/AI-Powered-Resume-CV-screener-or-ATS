@@ -1,3 +1,22 @@
+// Job Service code
+//Purpose ----->
+JobService.java — the business/data layer
+
+This is where the actual logic lives:
+
+create() — builds a Job entity from the incoming request plus the creator, and persists it via JobRepository
+findAll() — lists every job posting
+findByIdOrThrow() — fetches one job, or throws a clean 404 Not Found (ResponseStatusException) if it doesn't exist, instead of leaking a raw NoSuchElementException up to the client
+
+Why split them at all?
+
+Separation of concerns: controllers stay thin (HTTP/JSON concerns only), services own the logic and transaction boundaries. This is the same pattern you'll see repeated for CandidateController/CandidateService and would see for InterviewController/InterviewService.
+Reusability: JobService can be called from other services too (e.g. CandidateService will call JobService.findByIdOrThrow() when a candidate is uploaded, to confirm the job exists and grab its description for scoring) — without needing to go through HTTP.
+Testability: you can unit-test JobService with a mocked JobRepository and no web server involved at all; controller tests stay focused on request/response shape and status codes.
+
+In short: Job is the entity/table, JobRepository talks to the database, JobService is the logic that sits above the repository, and JobController is the thin REST wrapper recruiters' frontend actually calls to create and list job postings.
+
+
 package com.sift.screener.job;
 
 import com.sift.screener.job.dto.JobRequest;
@@ -34,18 +53,29 @@ public class JobService {
     }
 }
 
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+//job controller code
 
+// Purpose----> 
+JobController.java — the HTTP layer
 
+It's the entry point for anything related to job postings over REST. It doesn't contain any business logic itself — its only job is to:
 
-
-
-
-
-
-
-
-
-
+Receive HTTP requests (POST /api/jobs, GET /api/jobs, GET /api/jobs/{jobId})
+Validate/deserialize the request body (@Valid @RequestBody JobRequest)
+Pull out the logged-in user via @AuthenticationPrincipal User currentUser (populated by your JWT filter)
+Delegate the actual work to JobService
+Convert the returned Job entity into a JobResponse DTO before sending it back, so you're never leaking your JPA entity (and its lazy-loaded fields) straight into the API response
 
 
 package com.sift.screener.job;

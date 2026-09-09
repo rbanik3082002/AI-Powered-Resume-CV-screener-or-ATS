@@ -54,7 +54,8 @@ Database- Postgre SQL
 
 Feature rundown per screen:
 
-Screen — paste/drop resumes, edit the job description, hit "Score candidate" (or "Load samples" to demo instantly). Each candidate shows a live status (scoring → scored) with a score bar.
+Screen — paste/drop resumes, edit the job description,
+Hit "Score candidate" (or "Load samples" to demo instantly). Each candidate shows a live status (scoring → scored) with a score bar.
 Shortlist — a threshold slider filters the ranked list; each row shows rank, name, AI summary, strengths/gaps, and the numeric score.
 Ask — a chat box to ask free-form questions across the whole candidate pool ("who's strongest in cloud?").
 Schedule — for anyone past the threshold, pick a date/time and confirm — turns into a "Scheduled ✓" badge.
